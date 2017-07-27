@@ -72,8 +72,7 @@ app.post('/vendor_info', (req, res) => {
 
             //DOCUMENTS
             data.documents = [];
-            console.log(vendorInfo.Documents);
-            for(var i = 0; i < vendorInfo.Documents; i++){
+            for(var i = 0; i < vendorInfo.Documents.length; i++){
             data.documents[i] = {};
             data.documents[i].type= vendorInfo.Documents[i].Type;
             data.documents[i].name= vendorInfo.Documents[i].Name;
