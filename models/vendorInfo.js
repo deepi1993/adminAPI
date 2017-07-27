@@ -434,6 +434,10 @@ var Vendor = new Schema({
         garageID: {
             type: String
         }
+        // Comments: {
+        //     type: String
+        // }
+
     }
 });
 

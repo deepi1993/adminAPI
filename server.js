@@ -71,8 +71,15 @@ app.post('/vendor_info', (req, res) => {
 
 
             //DOCUMENTS
-            data.documents = {};
-            data.documents = vendorInfo.Documents;
+            data.documents = [];
+            for(var i =0; i < vendorInfo.Documents; i++){
+            data.documents[i] = {}
+            data.documents[i].type= vendorInfo.Documents[i].Type;
+            data.documents[i].name= vendorInfo.Documents[i].Name;
+            data.documents[i].image= vendorInfo.Documents[i].Img;
+            
+            }
+
 
 
             //SERVICES
