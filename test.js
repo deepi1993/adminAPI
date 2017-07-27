@@ -66,7 +66,7 @@ app.use(bodyParser.json());
 //     else
 //     {
 //     console.log(vendorInfo);
-    
+
 //     }
 // })
 
@@ -78,22 +78,24 @@ app.post('/vendorinfo', (req, res) => {
     var id = (req.body.garage_id);
     var database;
     var dbId = database.onboarding_info.garage_id;
-    
-Vendor.findOne(({dbId:"id"}) , function(err , vendorInfo) {
-    if(err)
-    {
-        console.log("unable to find");
-    }
-    if(vehicle === null)
-    {
-        console.log("invalid id");
-    }
-    else{
-    console.log(vendor);
-    res.send(vendorInfo);
-    }
-})
+
+    Vendor.findOne({ "onboarding_info.garageID": (id).toString() }, function (err, vendorInfo) {
+        if (err) {
+            return res.status(500).json({
+                isSuccess: false,
+                message: 'An error occured',
+                error: err
+            })
+            }
+    if(vehicle === null) {
+                console.log("invalid id");
+            }
+            else {
+                console.log(vendor);
+                res.send(vendorInfo);
+            }
+        })
 
 
    
-// });    
+});    
