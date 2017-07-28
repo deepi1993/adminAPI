@@ -417,8 +417,12 @@ var Vendor = new Schema({
         },
         onBoardingStatus: {
             type: String,
-            enum: ['Saved', 'Visited', 'Submitted']
+            enum: ['Saved', 'Visited', 'Submitted' , 'Approve' , 'Reject' , 'Rework' , 'Onhold']
         },
+
+        // comments:{
+
+        // },
         raUser: {
             type: Schema.Types.ObjectId,
             ref: 'User'

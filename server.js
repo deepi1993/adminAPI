@@ -2,15 +2,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
-
 mongoose.connect('mongodb://vikram:vikram@ds131492.mlab.com:31492/readyapi', {
     useMongoClient: true
 });
 
-
-// var { mongoose } = require('./db/mongoose');
 var VendorInfo = require('./models/vendorInfo');
-
 
 var app = express();
 const port = process.env.PORT || 3000;
@@ -19,10 +15,31 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+//HELPER FUNCTION FOR VALIDATION RETURNS AN ARRAY OF NON Null STRING KEYS
+var validation = (obj) => {
+    var valid = Object.keys(obj);
+    var i = 0;
+    while(i < valid.length) 
+    {
+        if(obj[valid[i]].length == 0)
+        {
+            console.log(obj[valid[i]]);
+            d.splice(i,1);
+        }
+        i++;
+    }
+    return valid;
+};
 
+
+//POST ROUTE FOR VENDOR INFO
 app.post('/vendor_info', (req, res) => {
 
+//d = incoming garage id
     var d = req.body.garage_id;
+    console.log(d);
+
+    //vendorInfo stores all the info of the garage with particular garage id.
     VendorInfo.findOne({ "onboarding_info.garageID": d.toString() }, function (err, vendorInfo) {
         if (err) {
             return res.status(500).json({
@@ -35,9 +52,12 @@ app.post('/vendor_info', (req, res) => {
             console.log("invalid id");
         }
         else {
-            var data = {};
+
+          //array to be sent in the response
+            var data = [];
 
             //BASIC INFORMATION
+            
             data.basic_info = {};
             data.basic_info.garage_id = vendorInfo.onboarding_info.garageID;
             data.basic_info.garage_name = vendorInfo.BasicInfo.garagename;
@@ -66,7 +86,7 @@ app.post('/vendor_info', (req, res) => {
 
 
             //OPERATION TIMINGS
-            data.operation_timings = {};
+            data.operation_timings = [];
             data.operation_timings = vendorInfo.Timings;
 
 
