@@ -126,7 +126,7 @@ app.post('/vendor_info', (req, res) => {
 
 
 
-            res.send(vehicleInfo);
+            res.send(vendorInfo);
 
         }
     })
