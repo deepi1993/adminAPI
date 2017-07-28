@@ -54,7 +54,7 @@ app.post('/vendor_info', (req, res) => {
         else {
 
           //array to be sent in the response
-            var data = [];
+            var data = {};
 
             //BASIC INFORMATION
             
