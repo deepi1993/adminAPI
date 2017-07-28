@@ -29,7 +29,7 @@ var validation = (obj) => {
         i++;
     }
     return valid;
-};
+}
 
 
 //POST ROUTE FOR VENDOR INFO
@@ -58,12 +58,12 @@ app.post('/vendor_info', (req, res) => {
 
             //BASIC INFORMATION
             
-            data[0].basic_info = {};
-            data[0].basic_info.garage_id = vendorInfo.onboarding_info.garageID;
-            data[0].basic_info.garage_name = vendorInfo.BasicInfo.garagename;
-            data[0].basic_info.kind_of_business;
-            data[0].basic_info.address = vendorInfo.BasicInfo.address1;
-            data[0].basic_info.latitude = vendorInfo.BasicInfo.latitude;
+            data.basic_info = {};
+            data.basic_info.garage_id = vendorInfo.onboarding_info.garageID;
+            data.basic_info.garage_name = vendorInfo.BasicInfo.garagename;
+            data.basic_info.kind_of_business;
+            data.basic_info.address = vendorInfo.BasicInfo.address1;
+            data.basic_info.latitude = vendorInfo.BasicInfo.latitude;
             data.basic_info.longitude = vendorInfo.BasicInfo.longitude;
             data.basic_info.email_id = vendorInfo.BasicInfo.email;
             data.basic_info.pincode = vendorInfo.BasicInfo.pincode;
@@ -126,7 +126,7 @@ app.post('/vendor_info', (req, res) => {
 
 
 
-            res.send(vendorInfo);
+            res.send(data);
 
         }
     })
