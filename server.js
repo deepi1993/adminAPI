@@ -54,24 +54,24 @@ app.post('/vendor_info', (req, res) => {
         else {
 
           //array to be sent in the response
-            var data = [{}];
+            // var data = [];
 
-            //BASIC INFORMATION
+            // //BASIC INFORMATION
             
-            data.basic_info = {};
-            data.basic_info.garage_id = vendorInfo.onboarding_info.garageID;
-            data.basic_info.garage_name = vendorInfo.BasicInfo.garagename;
-            data.basic_info.kind_of_business;
-            data.basic_info.address = vendorInfo.BasicInfo.address1;
-            data.basic_info.latitude = vendorInfo.BasicInfo.latitude;
-            data.basic_info.longitude = vendorInfo.BasicInfo.longitude;
-            data.basic_info.email_id = vendorInfo.BasicInfo.email;
-            data.basic_info.pincode = vendorInfo.BasicInfo.pincode;
-            data.basic_info.gallery = [];
-            for(var i = 0; i < vendorInfo.BasicInfo.gallery.length; i++)
-            {
-                data.basic_info.gallery[i] = vendorInfo.BasicInfo.gallery[i];
-            }
+            // data[0].basic_info = {};
+            // data[0].basic_info.garage_id = vendorInfo.onboarding_info.garageID;
+            // data[0].basic_info.garage_name = vendorInfo.BasicInfo.garagename;
+            // data[0].basic_info.kind_of_business;
+            // data.basic_info.address = vendorInfo.BasicInfo.address1;
+            // data.basic_info.latitude = vendorInfo.BasicInfo.latitude;
+            // data.basic_info.longitude = vendorInfo.BasicInfo.longitude;
+            // data.basic_info.email_id = vendorInfo.BasicInfo.email;
+            // data.basic_info.pincode = vendorInfo.BasicInfo.pincode;
+            // data.basic_info.gallery = [];
+            // for(var i = 0; i < vendorInfo.BasicInfo.gallery.length; i++)
+            // {
+            //     data.basic_info.gallery[i] = vendorInfo.BasicInfo.gallery[i];
+            // }
             
             // //BANK INFORMATION
             // data.bank_info = {};
@@ -126,7 +126,7 @@ app.post('/vendor_info', (req, res) => {
 
 
 
-            res.send(data);
+            res.send(vehicleInfo);
 
         }
     })
