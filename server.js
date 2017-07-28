@@ -17,19 +17,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //HELPER FUNCTION FOR VALIDATION RETURNS AN ARRAY OF NON Null STRING KEYS
 var validation = (obj) => {
-    var valid = Object.keys(obj);
+    var d = Object.keys(obj);
     var i = 0;
-    while(i < valid.length) 
+    while(i < d.length) 
     {
-        if(obj[valid[i]].length == 0)
+        if(obj[d[i]].length == 0)
         {
-            console.log(obj[valid[i]]);
-            d.splice(i,1);
+           
+            delete obj[d[i]];
+           
         }
         i++;
     }
-    return valid;
-}
+    return obj;
+};
 
 
 //POST ROUTE FOR VENDOR INFO
@@ -77,16 +78,18 @@ app.post('/vendor_info', (req, res) => {
 
             data.push(basic_info);
             
-            // //BANK INFORMATION
-            // data.bank_info = {};
-            // data.bank_info.bank_name = vendorInfo.Bank.bankName;
-            // data.bank_info.branch_name = vendorInfo.Bank.branchName;
-            // data.bank_info.ifsc_code = vendorInfo.Bank.ifsc;
-            // data.bank_info.account_number = vendorInfo.Bank.acc;
-            // data.bank_info.current = vendorInfo.Bank.current;
-            // data.bank_info.account_holder = vendorInfo.Bank.name;
-            // data.bank_info.pancard_number = vendorInfo.Bank.pan;
-            // data.bank_info.paytm_number = vendorInfo.Bank.paytm;
+            //BANK INFORMATION
+            var bank_info = {};
+            bank_info.bank_name = vendorInfo.Bank.bankName;
+            bank_info.branch_name = vendorInfo.Bank.branchName;
+            bank_info.ifsc_code = vendorInfo.Bank.ifsc;
+            bank_info.account_number = vendorInfo.Bank.acc;
+            bank_info.current = vendorInfo.Bank.current;
+            bank_info.account_holder = vendorInfo.Bank.name;
+            bank_info.pancard_number = vendorInfo.Bank.pan;
+            bank_info.paytm_number = vendorInfo.Bank.paytm;
+            bank_info = validation(bank_info);
+            data.push(bank_info);
 
 
             // //OPERATION TIMINGS
