@@ -53,76 +53,76 @@ app.post('/vendor_info', (req, res) => {
         }
         else {
 
-          //array to be sent in the response
-            // var data = [];
+        //   array to be sent in the response
+            var data = [];
 
-            // //BASIC INFORMATION
+            //BASIC INFORMATION
             
-            // data[0].basic_info = {};
-            // data[0].basic_info.garage_id = vendorInfo.onboarding_info.garageID;
-            // data[0].basic_info.garage_name = vendorInfo.BasicInfo.garagename;
-            // data[0].basic_info.kind_of_business;
-            // data.basic_info.address = vendorInfo.BasicInfo.address1;
-            // data.basic_info.latitude = vendorInfo.BasicInfo.latitude;
-            // data.basic_info.longitude = vendorInfo.BasicInfo.longitude;
-            // data.basic_info.email_id = vendorInfo.BasicInfo.email;
-            // data.basic_info.pincode = vendorInfo.BasicInfo.pincode;
-            // data.basic_info.gallery = [];
-            // for(var i = 0; i < vendorInfo.BasicInfo.gallery.length; i++)
-            // {
-            //     data.basic_info.gallery[i] = vendorInfo.BasicInfo.gallery[i];
-            // }
+            data[0].basic_info = {};
+            data[0].basic_info.garage_id = vendorInfo.onboarding_info.garageID;
+            data[0].basic_info.garage_name = vendorInfo.BasicInfo.garagename;
+            data[0].basic_info.kind_of_business;
+            data[0].basic_info.address = vendorInfo.BasicInfo.address1;
+            data[0].basic_info.latitude = vendorInfo.BasicInfo.latitude;
+            data.basic_info.longitude = vendorInfo.BasicInfo.longitude;
+            data.basic_info.email_id = vendorInfo.BasicInfo.email;
+            data.basic_info.pincode = vendorInfo.BasicInfo.pincode;
+            data.basic_info.gallery = [];
+            for(var i = 0; i < vendorInfo.BasicInfo.gallery.length; i++)
+            {
+                data.basic_info.gallery[i] = vendorInfo.BasicInfo.gallery[i];
+            }
             
-            // //BANK INFORMATION
-            // data.bank_info = {};
-            // data.bank_info.bank_name = vendorInfo.Bank.bankName;
-            // data.bank_info.branch_name = vendorInfo.Bank.branchName;
-            // data.bank_info.ifsc_code = vendorInfo.Bank.ifsc;
-            // data.bank_info.account_number = vendorInfo.Bank.acc;
-            // data.bank_info.current = vendorInfo.Bank.current;
-            // data.bank_info.account_holder = vendorInfo.Bank.name;
-            // data.bank_info.pancard_number = vendorInfo.Bank.pan;
-            // data.bank_info.paytm_number = vendorInfo.Bank.paytm;
+            //BANK INFORMATION
+            data.bank_info = {};
+            data.bank_info.bank_name = vendorInfo.Bank.bankName;
+            data.bank_info.branch_name = vendorInfo.Bank.branchName;
+            data.bank_info.ifsc_code = vendorInfo.Bank.ifsc;
+            data.bank_info.account_number = vendorInfo.Bank.acc;
+            data.bank_info.current = vendorInfo.Bank.current;
+            data.bank_info.account_holder = vendorInfo.Bank.name;
+            data.bank_info.pancard_number = vendorInfo.Bank.pan;
+            data.bank_info.paytm_number = vendorInfo.Bank.paytm;
 
 
-            // //OPERATION TIMINGS
-            // data.operation_timings = [];
-            // data.operation_timings = vendorInfo.Timings;
+            //OPERATION TIMINGS
+            data.operation_timings = [];
+            data.operation_timings = vendorInfo.Timings;
 
 
-            // //DOCUMENTS
-            // data.documents = [];
-            // for(var i = 0; i < vendorInfo.Documents.length; i++){
-            // data.documents[i] = {};
-            // data.documents[i].type= vendorInfo.Documents[i].Type;
-            // data.documents[i].name= vendorInfo.Documents[i].Name;
-            // data.documents[i].image= vendorInfo.Documents[i].Img;
+            //DOCUMENTS
+            data.documents = [];
+            for(var i = 0; i < vendorInfo.Documents.length; i++){
+            data.documents[i] = {};
+            data.documents[i].type= vendorInfo.Documents[i].Type;
+            data.documents[i].name= vendorInfo.Documents[i].Name;
+            data.documents[i].image= vendorInfo.Documents[i].Img;
             
-            // }
+            }
 
 
 
-            // //SERVICES
+            //SERVICES
 
-            // data.car = {};
-            // data.car = vendorInfo.Car;
-            // data.bike = {};
-            // data.bike = vendorInfo.Bike;
+            data.car = {};
+            data.car = vendorInfo.Car;
+            data.bike = {};
+            data.bike = vendorInfo.Bike;
 
 
 
-            // // CONTACT INFORMATION
-            // data.contact_info = [];
+            // CONTACT INFORMATION
+            data.contact_info = [];
 
-            // for (var i = 0; i < vendorInfo.Contacts.length; i++) {
-            //     data.contact_info[i] = {};
-            //     data.contact_info[i].name = vendorInfo.Contacts[i].name;
-            //     data.contact_info[i].desgination = vendorInfo.Contacts[i].designation;
-            //     data.contact_info[i].phone = vendorInfo.Contacts[i].phone;
-            //     data.contact_info[i].images = vendorInfo.Contacts[i].image;
-            //     data.contact_info.languages = [];               
-            //     data.contact_info[i].languages = vendorInfo.Contacts[i].languages;               
-            // }
+            for (var i = 0; i < vendorInfo.Contacts.length; i++) {
+                data.contact_info[i] = {};
+                data.contact_info[i].name = vendorInfo.Contacts[i].name;
+                data.contact_info[i].desgination = vendorInfo.Contacts[i].designation;
+                data.contact_info[i].phone = vendorInfo.Contacts[i].phone;
+                data.contact_info[i].images = vendorInfo.Contacts[i].image;
+                data.contact_info.languages = [];               
+                data.contact_info[i].languages = vendorInfo.Contacts[i].languages;               
+            }
 
 
 
