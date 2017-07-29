@@ -113,14 +113,15 @@ app.post('/vendor_info', (req, res) => {
 
             //SERVICES
 
-            var car = {};
-            car = vendorInfo.Car;
-            car = validation(car);
-            data.push(car);
-            var bike = {};           
-            bike = vendorInfo.Bike;
-            bike = validation(bike);
-            data.push(bike);
+            // var car = {};
+            // car = vendorInfo.Car;
+            // car = validation(car);
+            // data.push(car);
+            // var bike = {};           
+            // bike = vendorInfo.Bike;
+            // bike = validation(bike);
+            // data.push(bike);
+            // console.log(bike);
 
 
 
