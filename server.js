@@ -115,9 +115,11 @@ app.post('/vendor_info', (req, res) => {
 
             var car = {};
             car = vendorInfo.Car;
+            car = validation(car);
             data.push(car);
             var bike = {};           
             bike = vendorInfo.Bike;
+            bike = validation(bike);
             data.push(bike);
 
 
