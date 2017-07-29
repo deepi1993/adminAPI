@@ -19,13 +19,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var validation = (obj) => {
     var d = Object.keys(obj);
     var i = 0;
-    while(i < d.length) 
-    {
-        if(obj[d[i]].length == 0)
-        {
-           
+    while (i < d.length) {
+        if (obj[d[i]].length == 0) {
+
             delete obj[d[i]];
-           
+
         }
         i++;
     }
@@ -36,7 +34,7 @@ var validation = (obj) => {
 //POST ROUTE FOR VENDOR INFO
 app.post('/vendor_info', (req, res) => {
 
-//d = incoming garage id
+    //d = incoming garage id
     var d = req.body.garage_id;
     console.log(d);
 
@@ -54,13 +52,13 @@ app.post('/vendor_info', (req, res) => {
         }
         else {
 
-        //   array to be sent in the response
+            //   array to be sent in the response
 
             var data = [];
-          
+
 
             //BASIC INFORMATION
-            
+
             var basic_info = {};
             basic_info.garage_id = vendorInfo.onboarding_info.garageID;
             basic_info.garage_name = vendorInfo.BasicInfo.garagename;
@@ -71,13 +69,12 @@ app.post('/vendor_info', (req, res) => {
             basic_info.email_id = vendorInfo.BasicInfo.email;
             basic_info.pincode = vendorInfo.BasicInfo.pincode;
             basic_info.gallery = [];
-            for(var i = 0; i < vendorInfo.BasicInfo.gallery.length; i++)
-            {
+            for (var i = 0; i < vendorInfo.BasicInfo.gallery.length; i++) {
                 basic_info.gallery[i] = vendorInfo.BasicInfo.gallery[i];
             }
 
             data.push(basic_info);
-            
+
             //BANK INFORMATION
             var bank_info = {};
             bank_info.bank_name = vendorInfo.Bank.bankName;
@@ -88,40 +85,74 @@ app.post('/vendor_info', (req, res) => {
             bank_info.account_holder = vendorInfo.Bank.name;
             bank_info.pancard_number = vendorInfo.Bank.pan;
             bank_info.paytm_number = vendorInfo.Bank.paytm;
+            //validation after feeding the information so even if info comes we dont have to change the code
             bank_info = validation(bank_info);
             data.push(bank_info);
 
 
-            // //OPERATION TIMINGS
-            // var operation_timings = [];
-            // data.operation_timings = vendorInfo.Timings;
+            //OPERATION TIMINGS
+            var operation_timings = [];
+            var i = 0;
+            while (i < 7) 
+            {
+                var e = `${i}`;
+                var day = 'weekDay_' + e;
+                operation_timings[i] = {};
+                operation_timings[i].day = vendorInfo.Timings[day].Day;
 
+                if (vendorInfo.Timings[day].isToday === false) 
+                {
+                    operation_timings[i].Holiday = true;
+                    i++;
+                }
+                else 
+                {
+                    operation_timings[i].work_Start = vendorInfo.Timings[day].wStart;
+                    operation_timings[i].work_End = vendorInfo.Timings[day].wEnd;
+                    if (vendorInfo.Timings[day].isRest = true) 
+                    {
+                        operation_timings[i].rest_Start = vendorInfo.Timings[day].rStart;
+                        operation_timings[i].rest_End = vendorInfo.Timings[day].rEnd;
+                    }
+                    else 
+                    {
+                        operation_timings[i].rest = true;
+                    }
+                    i++;
+                }
+
+            }
+            data.push(operation_timings);
 
             //DOCUMENTS
             var documents = [];
-            for(var i = 0; i < vendorInfo.Documents.length; i++){
-            documents[i] = {};
-            documents[i].type= vendorInfo.Documents[i].Type;
-            documents[i].name= vendorInfo.Documents[i].Name;
-            documents[i].image= vendorInfo.Documents[i].Img;
-            
-        }
-        data.push(documents);
+            for (var i = 0; i < vendorInfo.Documents.length; i++) {
+                documents[i] = {};
+                documents[i].type = vendorInfo.Documents[i].Type;
+                documents[i].name = vendorInfo.Documents[i].Name;
+                documents[i].image = vendorInfo.Documents[i].Img;
+            }
+            data.push(documents);
 
 
 
 
-            //SERVICES
+            // //SERVICES
 
-            // var car = {};
-            // car = vendorInfo.Car;
-            // car = validation(car);
-            // data.push(car);
-            // var bike = {};           
+            // // var car = {};
+            // // car = vendorInfo.Car;
+            // // car = validation(car);
+            // // data.push(car);
+            // // var bike = {};           
             // bike = vendorInfo.Bike;
             // bike = validation(bike);
+            // for(var i = 0; i < bike.Services.length ; i++)
+            // {
+            //     bike.Services[i] = validation(bike.Services[i]);
+            // }
+            // console.log(bike.Services.length);
             // data.push(bike);
-            // console.log(bike);
+            // // console.log(bike);
 
 
 
@@ -134,10 +165,9 @@ app.post('/vendor_info', (req, res) => {
                 data.contact_info[i].desgination = vendorInfo.Contacts[i].designation;
                 data.contact_info[i].phone = vendorInfo.Contacts[i].phone;
                 data.contact_info[i].images = vendorInfo.Contacts[i].image;
-                data.contact_info.languages = [];               
-                data.contact_info[i].languages = vendorInfo.Contacts[i].languages;               
+                data.contact_info.languages = [];
+                data.contact_info[i].languages = vendorInfo.Contacts[i].languages;
             }
-
 
 
             res.send(data);
