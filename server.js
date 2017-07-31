@@ -33,19 +33,35 @@ var validation = (obj) => {
 };
 
 
+
+// VehicleInfo.findOne({_id:id} , function(err,vehicleInfo)
+// {
+//     if(vehicleInfo===null)
+//     {
+//         console.log("ID doesnt exists");
+//     }
+//     else{
+//         console.log(vehicleInfo);       
+//     var vehicleName = `${vehicleInfo.vehicle.make}_${vehicleInfo.vehicle.model}`;
+//     console.log(vehicleName);
+//     }
+// });
+
+
 //POST ROUTE FOR VENDOR INFO
 app.post('/vendor_info', (req, res) => {
 
     //d = incoming garage id
     var d = req.body.garage_id;
     console.log(d);
-    // var _id = "5971d6ca8b6a730011609ac6" ;
-    // VehicleInfo.findById(_id , function(err,vehicleInfo)
+
+    // var id = "5971d6ca8b6a730011609ac6" ;
+    // VehicleInfo.findOne({"id":id} , function(err,vehicleInfo)
     // {
-        
+
     //     var vehicleName = `${vehicleInfo.vehicle.make}_${vehicleInfo.vehicle.model}`;
     //     console.log(vehicleName);
-    // })
+    // });
 
 
 
@@ -84,7 +100,7 @@ app.post('/vendor_info', (req, res) => {
                 data.basic_info.gallery[i] = vendorInfo.BasicInfo.gallery[i];
             }
 
-          
+
 
             //BANK INFORMATION
             data.bank_info = {};
@@ -98,42 +114,38 @@ app.post('/vendor_info', (req, res) => {
             data.bank_info.paytm_number = vendorInfo.Bank.paytm;
             //validation after feeding the information so even if info comes we dont have to change the code
             data.bank_info = validation(data.bank_info);
-            
+
 
 
             //OPERATION TIMINGS
             data.operation_timings = [];
             var i = 0;
-            while (i < 7) 
-            {
+            while (i < 7) {
                 var e = `${i}`;
                 var day = 'weekDay_' + e;
                 data.operation_timings[i] = {};
                 data.operation_timings[i].day = vendorInfo.Timings[day].Day;
 
-                if (vendorInfo.Timings[day].isToday === false) 
-                {
+                if (vendorInfo.Timings[day].isToday === false) {
                     data.operation_timings[i].Holiday = true;
                     i++;
                 }
-                else 
-                {
+                else {
                     data.operation_timings[i].work_Start = vendorInfo.Timings[day].wStart;
                     data.operation_timings[i].work_End = vendorInfo.Timings[day].wEnd;
-                    if (vendorInfo.Timings[day].isRest = true) 
-                    {
+                    data.operation_timings[i].shift = "24_hours";
+                    if (vendorInfo.Timings[day].isRest = true) {
                         data.operation_timings[i].rest_Start = vendorInfo.Timings[day].rStart;
                         data.operation_timings[i].rest_End = vendorInfo.Timings[day].rEnd;
                     }
-                    else 
-                    {
+                    else {
                         data.operation_timings[i].rest = true;
                     }
                     i++;
                 }
 
             }
-            
+
 
             // DOCUMENTS
             data.documents = [];
@@ -143,15 +155,186 @@ app.post('/vendor_info', (req, res) => {
                 data.documents[i].name = vendorInfo.Documents[i].Name;
                 data.documents[i].image = vendorInfo.Documents[i].Img;
             }
-           
+
+
+            data.contact_info = [];
+
+            for (var i = 0; i < vendorInfo.Contacts.length; i++) {
+                data.contact_info[i] = {};
+                data.contact_info[i].name = vendorInfo.Contacts[i].name;
+                data.contact_info[i].desgination = vendorInfo.Contacts[i].designation;
+                data.contact_info[i].phone = vendorInfo.Contacts[i].phone;
+                data.contact_info[i].images = vendorInfo.Contacts[i].image;
+                data.contact_info.languages = [];
+                data.contact_info[i].languages = vendorInfo.Contacts[i].languages;
+            }
+
+            //SERVICES
+
+       
+
+
+        VehicleInfo.find().then((vehicle) => {
+
+           for (var i = 0; i < vendorInfo.Bike.Services.length; i++){
+
+               for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
+
+                   for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
+
+                       var vehicleName;
+                       var id = vendorInfo.Bike.Services[i].Charges[j].VehicleType[k];
+                       var arrFound = vehicle.filter(function(item) {
+                          return item._id == `${id}`;
+                        });
+
+                      if (arrFound.length > 0) {
+                         var vhcl = arrFound[0];
+                         vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
+                         vendorInfo.Bike.Services[i].Charges[j].VehicleType[k]=vehicleName;
+
+                      }
+                   }
+               }
+           }
+
+           data.bike = vendorInfo.Bike;
+
+           //car
+          for (var i = 0; i < vendorInfo.Car.Services.length; i++){
+
+              for (var j = 0; j < vendorInfo.Car.Services[i].Charges.length; j++) {
+
+                  for (var k = 0; k < vendorInfo.Car.Services[i].Charges[j].VehicleType.length; k++) {
+
+                      var vehicleName;
+                      var id = vendorInfo.Car.Services[i].Charges[j].VehicleType[k];
+                      var arrFound = vehicle.filter(function(item) {
+                         return item._id == `${id}`;
+                       });
+
+                     if (arrFound.length > 0) {
+                        var vhcl = arrFound[0];
+                        vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
+                        vendorInfo.Car.Services[i].Charges[j].VehicleType[k]=vehicleName;
+
+                     }
+                  }
+              }
+          }
+
+           data.car = vendorInfo.Car;
+
+           res.send(data);
+
+         },(e) => {
+           console.log(e);
+            res.send(data);
+         });
+            
+
+            // for (var i = 0; i < vendorInfo.Bike.Services.length; i++) 
+            // {
+            //     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
+
+            //         for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
+            //             console.log(k);
+            //             var id = vendorInfo.Bike.Services[i].Charges[j].VehicleType[k];
+            //             console.log(id);
+            //             VehicleInfo.findOne({_id: id }, (err,vehicleinfo) => {
+            //                 if(err){
+            //                     console.log('Not Found');
+            //                 }else{
+            //                     if(vehicleinfo !== null)
+            //                     {
+            //                         var  arr = [];
+            //                     var vehicleName = `${vehicleinfo.vehicle.make}_${vehicleinfo.vehicle.model}`;
+            //                     arr.push(vehicleName)
+            //                     console.log(arr);
+
+            //                     // console.log(vendorInfo.Bike.Services[i].Charges[j].VehicleType[k]);
+
+            //                     //   console.log(vehicleName);
+            //                     }else
+            //                     {
+            //                         console.log("ID doesnt exists");
+            //                     }
+                            
+            //                 }
+            //             });
+            //         }
+            //     }
+            // }
+
+
+ 
+
+            
+
+            //SERVICES 2
+            // var Id = []
+
+            // for (var i = 0; i < vendorInfo.Bike.Services.length; i++) 
+            // {
+            //     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
+
+            //         for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
+            //             Id.push(vendorInfo.Bike.Services[i].Charges[j].VehicleType[k]);
+            //         }
+            //     }
+            // }
+
+            // console.log(Id);
+            //  var ls = new Array();
+
+            // Id.forEach(function(ids) {
+            //     VehicleInfo.findOne({_id:ids} , function(err,vehicleinfo) {
+            //         if(err)
+            //         {
+            //             console.log("AN error occured");
+            //         }
+            //         if(vehicleinfo === null)
+            //         {
+            //             console.log("Id doesnt ecists");
+            //         }
+            //         else{
+            //          var vehicleName =  `${vehicleinfo.vehicle.make}_${vehicleinfo.vehicle.model}`;   
+            //         //  console.log(vehicleName);
+            //          ls.push(vehicleName);
+            //         }            
+            //     });
+
+            
+            // });
+
+            
+
+            
+
+
+
+   
 
 
 
 
-            // //SERVICES
 
-            // // var car = {};
-            // // car = vendorInfo.Car;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           // console.log(d);
+
             // // car = validation(car);
             // // data.push(car);
             // // var bike = {};           
@@ -168,20 +351,10 @@ app.post('/vendor_info', (req, res) => {
 
 
             // CONTACT INFORMATION
-            data.contact_info = [];
+            
 
-            for (var i = 0; i < vendorInfo.Contacts.length; i++) {
-                data.contact_info[i] = {};
-                data.contact_info[i].name = vendorInfo.Contacts[i].name;
-                data.contact_info[i].desgination = vendorInfo.Contacts[i].designation;
-                data.contact_info[i].phone = vendorInfo.Contacts[i].phone;
-                data.contact_info[i].images = vendorInfo.Contacts[i].image;
-                data.contact_info.languages = [];
-                data.contact_info[i].languages = vendorInfo.Contacts[i].languages;
-            }
-
-            console.log(vendorInfo);
-            res.send(data);
+            // console.log(vendorInfo);
+            //res.send(data);
 
         }
     })
