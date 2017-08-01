@@ -34,37 +34,14 @@ var validation = (obj) => {
 
 
 
-// VehicleInfo.findOne({_id:id} , function(err,vehicleInfo)
-// {
-//     if(vehicleInfo===null)
-//     {
-//         console.log("ID doesnt exists");
-//     }
-//     else{
-//         console.log(vehicleInfo);       
-//     var vehicleName = `${vehicleInfo.vehicle.make}_${vehicleInfo.vehicle.model}`;
-//     console.log(vehicleName);
-//     }
-// });
-
 
 //POST ROUTE FOR VENDOR INFO
 app.post('/vendor_info', (req, res) => {
 
-    //d = incoming garage id
     var d = req.body.garage_id;
     console.log(d);
 
-    // var id = "5971d6ca8b6a730011609ac6" ;
-    // VehicleInfo.findOne({"id":id} , function(err,vehicleInfo)
-    // {
-
-    //     var vehicleName = `${vehicleInfo.vehicle.make}_${vehicleInfo.vehicle.model}`;
-    //     console.log(vehicleName);
-    // });
-
-
-
+    
     //vendorInfo stores all the info of the garage with particular garage id.
     VendorInfo.findOne({ "onboarding_info.garageID": d.toString() }, function (err, vendorInfo) {
         if (err) {
@@ -154,6 +131,7 @@ app.post('/vendor_info', (req, res) => {
                 data.documents[i].type = vendorInfo.Documents[i].Type;
                 data.documents[i].name = vendorInfo.Documents[i].Name;
                 data.documents[i].image = vendorInfo.Documents[i].Img;
+                data.documents[i].Signature = vendorInfo.onboarding_info.Signature;
             }
 
 
@@ -170,194 +148,89 @@ app.post('/vendor_info', (req, res) => {
             }
 
             //SERVICES
+            VehicleInfo.find().then((vehicle) => {
 
-       
+                for (var i = 0; i < vendorInfo.Bike.Services.length; i++) {
 
+                    for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
 
-        VehicleInfo.find().then((vehicle) => {
+                        for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
 
-           for (var i = 0; i < vendorInfo.Bike.Services.length; i++){
+                            var vehicleName;
+                            var id = vendorInfo.Bike.Services[i].Charges[j].VehicleType[k];
+                            var arrFound = vehicle.filter(function (item) {
+                                return item._id == `${id}`;
+                            });
 
-               for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
+                            if (arrFound.length > 0) {
+                                var vhcl = arrFound[0];
+                                vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
+                                vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = vehicleName;
 
-                   for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
-
-                       var vehicleName;
-                       var id = vendorInfo.Bike.Services[i].Charges[j].VehicleType[k];
-                       var arrFound = vehicle.filter(function(item) {
-                          return item._id == `${id}`;
-                        });
-
-                      if (arrFound.length > 0) {
-                         var vhcl = arrFound[0];
-                         vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
-                         vendorInfo.Bike.Services[i].Charges[j].VehicleType[k]=vehicleName;
-
-                      }
-                   }
-               }
-           }
-
-           data.bike = vendorInfo.Bike;
-
-           //car
-          for (var i = 0; i < vendorInfo.Car.Services.length; i++){
-
-              for (var j = 0; j < vendorInfo.Car.Services[i].Charges.length; j++) {
-
-                  for (var k = 0; k < vendorInfo.Car.Services[i].Charges[j].VehicleType.length; k++) {
-
-                      var vehicleName;
-                      var id = vendorInfo.Car.Services[i].Charges[j].VehicleType[k];
-                      var arrFound = vehicle.filter(function(item) {
-                         return item._id == `${id}`;
-                       });
-
-                     if (arrFound.length > 0) {
-                        var vhcl = arrFound[0];
-                        vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
-                        vendorInfo.Car.Services[i].Charges[j].VehicleType[k]=vehicleName;
-
-                     }
-                  }
-              }
-          }
-
-           data.car = vendorInfo.Car;
-
-           res.send(data);
-
-         },(e) => {
-           console.log(e);
-            res.send(data);
-         });
-            
-
-            // for (var i = 0; i < vendorInfo.Bike.Services.length; i++) 
-            // {
-            //     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
-
-            //         for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
-            //             console.log(k);
-            //             var id = vendorInfo.Bike.Services[i].Charges[j].VehicleType[k];
-            //             console.log(id);
-            //             VehicleInfo.findOne({_id: id }, (err,vehicleinfo) => {
-            //                 if(err){
-            //                     console.log('Not Found');
-            //                 }else{
-            //                     if(vehicleinfo !== null)
-            //                     {
-            //                         var  arr = [];
-            //                     var vehicleName = `${vehicleinfo.vehicle.make}_${vehicleinfo.vehicle.model}`;
-            //                     arr.push(vehicleName)
-            //                     console.log(arr);
-
-            //                     // console.log(vendorInfo.Bike.Services[i].Charges[j].VehicleType[k]);
-
-            //                     //   console.log(vehicleName);
-            //                     }else
-            //                     {
-            //                         console.log("ID doesnt exists");
-            //                     }
-                            
-            //                 }
-            //             });
-            //         }
-            //     }
-            // }
+                            }
+                        }
+                    }
+                }
 
 
- 
+
+                data.bike = vendorInfo.Bike;
+
+                //car
+                for (var i = 0; i < vendorInfo.Car.Services.length; i++) {
+
+                    for (var j = 0; j < vendorInfo.Car.Services[i].Charges.length; j++) {
+
+                        for (var k = 0; k < vendorInfo.Car.Services[i].Charges[j].VehicleType.length; k++) {
+
+                            var vehicleName;
+                            var id = vendorInfo.Car.Services[i].Charges[j].VehicleType[k];
+                            var arrFound = vehicle.filter(function (item) {
+                                return item._id == `${id}`;
+                            });
+
+                            if (arrFound.length > 0) {
+                                var vhcl = arrFound[0];
+                                vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
+                                vendorInfo.Car.Services[i].Charges[j].VehicleType[k] = vehicleName;
+
+                            }
+                        }
+                    }
+                }
+
+                data.car = vendorInfo.Car;
+
+                res.send(data);
+
+            }, (e) => {
+                console.log(e);
+                res.send(data);
+            });
+
 
             
-
-            //SERVICES 2
-            // var Id = []
-
-            // for (var i = 0; i < vendorInfo.Bike.Services.length; i++) 
-            // {
-            //     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
-
-            //         for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
-            //             Id.push(vendorInfo.Bike.Services[i].Charges[j].VehicleType[k]);
-            //         }
-            //     }
-            // }
-
-            // console.log(Id);
-            //  var ls = new Array();
-
-            // Id.forEach(function(ids) {
-            //     VehicleInfo.findOne({_id:ids} , function(err,vehicleinfo) {
-            //         if(err)
-            //         {
-            //             console.log("AN error occured");
-            //         }
-            //         if(vehicleinfo === null)
-            //         {
-            //             console.log("Id doesnt ecists");
-            //         }
-            //         else{
-            //          var vehicleName =  `${vehicleinfo.vehicle.make}_${vehicleinfo.vehicle.model}`;   
-            //         //  console.log(vehicleName);
-            //          ls.push(vehicleName);
-            //         }            
-            //     });
-
-            
-            // });
-
-            
-
-            
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-           // console.log(d);
-
-            // // car = validation(car);
-            // // data.push(car);
-            // // var bike = {};           
-            // bike = vendorInfo.Bike;
-            // bike = validation(bike);
-            // for(var i = 0; i < bike.Services.length ; i++)
-            // {
-            //     bike.Services[i] = validation(bike.Services[i]);
-            // }
-            // console.log(bike.Services.length);
-            // data.push(bike);
-            // // console.log(bike);
-
-
-
-            // CONTACT INFORMATION
-            
-
-            // console.log(vendorInfo);
-            //res.send(data);
 
         }
     })
+})
+
+
+
+app.post('/vendor_status' , (req,res) => {
+    var id = req.body.garage_id.toString();
+    console.log(id);
+    var status= req.body.status.toString();
+    console.log(status);
+    var Comments = req.body.comment.toString();
+    console.log(Comments);
+    VendorInfo.findOneAndUpdate({ "onboarding_info.garageID": id }, {$push: {"onboarding_info.Comments":Comments}, $set:{"onboarding_info.onBoardingStatus":status}} ,{ new: true }, function (err, vendor) {
+    if (err) {
+        console.log("Something went wrong in updating the data");
+    }
+    res.send("Sucessfuly Updated Data");
+});
+
 })
 
 app.listen(port, () => {

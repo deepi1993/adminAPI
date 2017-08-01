@@ -420,9 +420,6 @@ var Vendor = new Schema({
             enum: ['Saved', 'Visited', 'Submitted' , 'Approve' , 'Reject' , 'Rework' , 'Onhold']
         },
 
-        // comments:{
-
-        // },
         raUser: {
             type: Schema.Types.ObjectId,
             ref: 'User'
@@ -436,11 +433,13 @@ var Vendor = new Schema({
             trim: true
         },
         garageID: {
-            type: String
-        }
-        // Comments: {
-        //     type: String
-        // }
+            type: String,
+        },
+        Comments: [
+            {
+           type: String
+                }
+        ]
 
     }
 });
