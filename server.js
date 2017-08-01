@@ -108,12 +108,13 @@ app.post('/vendor_info', (req, res) => {
                     i++;
                 }
                 else {
-                    data.operation_timings[i].work_Start = vendorInfo.Timings[day].wStart;
-                    data.operation_timings[i].work_End = vendorInfo.Timings[day].wEnd;
+                    
+                    data.operation_timings[i].work_Start = vendorInfo.Timings[day].wStart.toString().slice(16,24);
+                    data.operation_timings[i].work_End = vendorInfo.Timings[day].wEnd.toString().slice(16,24);
                     data.operation_timings[i].shift = "24_hours";
                     if (vendorInfo.Timings[day].isRest = true) {
-                        data.operation_timings[i].rest_Start = vendorInfo.Timings[day].rStart;
-                        data.operation_timings[i].rest_End = vendorInfo.Timings[day].rEnd;
+                        data.operation_timings[i].rest_Start = vendorInfo.Timings[day].rStart.toString().slice(16,24);
+                        data.operation_timings[i].rest_End = vendorInfo.Timings[day].rEnd.toString().slice(16,24);
                     }
                     else {
                         data.operation_timings[i].rest = true;
@@ -133,6 +134,10 @@ app.post('/vendor_info', (req, res) => {
                 data.documents[i].image = vendorInfo.Documents[i].Img;
                 data.documents[i].Signature = vendorInfo.onboarding_info.Signature;
             }
+            if(data.documents.length === 0)
+            {
+                delete data.documents;
+            }
 
 
             data.contact_info = [];
@@ -145,6 +150,10 @@ app.post('/vendor_info', (req, res) => {
                 data.contact_info[i].images = vendorInfo.Contacts[i].image;
                 data.contact_info.languages = [];
                 data.contact_info[i].languages = vendorInfo.Contacts[i].languages;
+            }
+            if(data.contact_info.length === 0)
+            {
+                delete data.contact_info;
             }
 
             //SERVICES
