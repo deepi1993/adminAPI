@@ -1,0 +1,550 @@
+{
+    "basic_info": {
+        "garage_id": "HkFXtOxIZ",
+        "garage_name": "Sri Sai service center",
+        "address": "Royal hospitality, kormangla 4th block",
+        "latitude": "12.9309792",
+        "longitude": "77.631111",
+        "email_id": "sreesai@center.com",
+        "pincode": "560034",
+        "gallery": [
+            "http://readyassist.in/vendorpics/JPEG_20170722_132819_-1081194650.jpg"
+        ]
+    },
+    "bank_info": {
+        "bank_name": "Sbi",
+        "branch_name": "kormangla",
+        "ifsc_code": "sbi3232",
+        "account_number": "24645494648488",
+        "current": true,
+        "account_holder": "Vikram",
+        "pancard_number": "dhdh6373hh",
+        "paytm_number": "5695956797"
+    },
+    "operation_timings": [
+        {
+            "day": "Sun",
+            "Holiday": true
+        },
+        {
+            "day": "Mon",
+            "work_Start": "05:30:56",
+            "work_End": "05:30:56",
+            "shift": "24_hours",
+            "rest_Start": "21:30:06",
+            "rest_End": "22:30:12"
+        },
+        {
+            "day": "Tue",
+            "work_Start": "05:30:56",
+            "work_End": "05:30:56",
+            "shift": "24_hours",
+            "rest_Start": "05:30:56",
+            "rest_End": "05:30:56"
+        },
+        {
+            "day": "Wed",
+            "work_Start": "05:30:56",
+            "work_End": "05:30:56",
+            "shift": "24_hours",
+            "rest_Start": "05:30:56",
+            "rest_End": "05:30:56"
+        },
+        {
+            "day": "Thu",
+            "work_Start": "05:30:56",
+            "work_End": "05:30:56",
+            "shift": "24_hours",
+            "rest_Start": "05:30:56",
+            "rest_End": "05:30:56"
+        },
+        {
+            "day": "Fri",
+            "work_Start": "05:30:56",
+            "work_End": "05:30:56",
+            "shift": "24_hours",
+            "rest_Start": "05:30:56",
+            "rest_End": "05:30:56"
+        },
+        {
+            "day": "Sat",
+            "work_Start": "05:30:56",
+            "work_End": "05:30:56",
+            "shift": "24_hours",
+            "rest_Start": "05:30:56",
+            "rest_End": "05:30:56"
+        }
+    ],
+    "documents": [
+        {
+            "type": "ID Proof",
+            "name": "ehh",
+            "image": "http://readyassist.in/vendorpics/JPEG_20170722_132819_-1081194650.jpg",
+            "Signature": "http://readyassist.in/vendorpics/JPEG_20170722_132819_-1081194650.jpg"
+        },
+        {
+            "type": "Address Proof",
+            "name": "ehej",
+            "image": "http://readyassist.in/vendorpics/JPEG_20170722_132819_-1081194650.jpg",
+            "Signature": "http://readyassist.in/vendorpics/JPEG_20170722_132819_-1081194650.jpg"
+        }
+    ],
+    "contact_info": [
+        {
+            "name": "vikram",
+            "desgination": "node.js",
+            "phone": "5648793431",
+            "languages": [
+                "Hindi",
+                "English"
+            ]
+        }
+    ],
+    "bike": {
+        "Services": [
+            {
+                "ServiceName": "Minor Repair",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf7573",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "213",
+                        "NightCharge": "4646",
+                        "BaseKM": "5665",
+                        "ExtraDay": "5959",
+                        "ExtraNight": "5665",
+                        "VehicleType": [
+                            "59646f55b1ef0208f89fe080",
+                            "59646fb8d6c5420915f37107",
+                            "59646fe381758c0924767302"
+                        ]
+                    },
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "565659",
+                        "NightCharge": "4646",
+                        "BaseKM": "5656",
+                        "ExtraDay": "5656",
+                        "ExtraNight": "5656",
+                        "VehicleType": [
+                            "59647012f7760709400a9293",
+                            "5964a89c8fbcde1bceda6704"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Battery Jumpstart",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf7572",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "466",
+                        "NightCharge": "454",
+                        "BaseKM": "495",
+                        "ExtraDay": "494",
+                        "ExtraNight": "4656",
+                        "VehicleType": [
+                            "59646f55b1ef0208f89fe080"
+                        ]
+                    },
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "5965",
+                        "NightCharge": "465",
+                        "BaseKM": "59",
+                        "ExtraDay": "59",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "59646fb8d6c5420915f37107"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "General Service",
+                "IsService": true,
+                "IsBackup": false,
+                "_id": "59807665b7e9311982cf7571",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "8989",
+                        "NightCharge": "868",
+                        "BaseKM": "898",
+                        "ExtraDay": "565",
+                        "ExtraNight": "59",
+                        "VehicleType": [
+                            "59646fb8d6c5420915f37107"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Fuel Delivery",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf7570",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "5665",
+                        "NightCharge": "56",
+                        "BaseKM": "46",
+                        "ExtraDay": "49",
+                        "ExtraNight": "49",
+                        "VehicleType": []
+                    },
+                    {
+                        "FuelType": "Diesel",
+                        "DayCharge": "49",
+                        "NightCharge": "79",
+                        "BaseKM": "89",
+                        "ExtraDay": "89",
+                        "ExtraNight": "89",
+                        "VehicleType": []
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Tube",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf756f",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "599",
+                        "NightCharge": "59",
+                        "BaseKM": "565",
+                        "ExtraDay": "56",
+                        "ExtraNight": "56",
+                        "VehicleType": [
+                            "59646f55b1ef0208f89fe080",
+                            "59646f55b1ef0208f89fe081",
+                            "59646f55b1ef0208f89fe082"
+                        ]
+                    },
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "599",
+                        "NightCharge": "59",
+                        "BaseKM": "565",
+                        "ExtraDay": "56",
+                        "ExtraNight": "56",
+                        "VehicleType": [
+                            "5964a89c8fbcde1bceda6704"
+                        ]
+                    },
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "599",
+                        "NightCharge": "59",
+                        "BaseKM": "565",
+                        "ExtraDay": "56",
+                        "ExtraNight": "56",
+                        "VehicleType": [
+                            "59647012f7760709400a9293"
+                        ]
+                    },
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "599",
+                        "NightCharge": "59",
+                        "BaseKM": "565",
+                        "ExtraDay": "56",
+                        "ExtraNight": "56",
+                        "VehicleType": [
+                            "59647012f7760709400a9420",
+                            "59647012f7760709400a9421"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Tubeless",
+                "IsService": true,
+                "IsBackup": false,
+                "_id": "59807665b7e9311982cf756e",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "59",
+                        "NightCharge": "56",
+                        "BaseKM": "49",
+                        "ExtraDay": "49",
+                        "ExtraNight": "59",
+                        "VehicleType": [
+                            "5964a89c8fbcde1bceda6704",
+                            "59647012f7760709400a9293"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Flatbed",
+                "IsService": true,
+                "IsBackup": false,
+                "_id": "59807665b7e9311982cf756d",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "95",
+                        "NightCharge": "55",
+                        "BaseKM": "49",
+                        "ExtraDay": "49",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "59646fb8d6c5420915f37107"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Leg Towing",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf756c",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "49",
+                        "NightCharge": "49",
+                        "BaseKM": "49",
+                        "ExtraDay": "59",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "5964a89c8fbcde1bceda6704",
+                            "59647012f7760709400a9293"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Mechanical",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf756b",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "89",
+                        "NightCharge": "46",
+                        "BaseKM": "56",
+                        "ExtraDay": "49",
+                        "ExtraNight": "79",
+                        "VehicleType": [
+                            "595a13f4896e73001150383c",
+                            "59646fb8d6c5420915f37107",
+                            "59646f55b1ef0208f89fe080"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "IDo": true
+    },
+    "car": {
+        "Services": [
+            {
+                "ServiceName": "Minor Repair",
+                "IsService": true,
+                "IsBackup": false,
+                "_id": "59807665b7e9311982cf756a",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "46",
+                        "NightCharge": "46",
+                        "BaseKM": "46",
+                        "ExtraDay": "46",
+                        "ExtraNight": "46",
+                        "VehicleType": [
+                            "59647106455fde09895a4aa6",
+                            "5964a72fc07c971b7d65c115"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Battery Jumpstart",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf7569",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "49",
+                        "NightCharge": "49",
+                        "BaseKM": "49",
+                        "ExtraDay": "49",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "596470ec094f83096d16e7e6",
+                            "5964a78e0ac88f1b96dc1887"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "General Service",
+                "IsService": true,
+                "IsBackup": false,
+                "_id": "59807665b7e9311982cf7568",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "46",
+                        "NightCharge": "46",
+                        "BaseKM": "49",
+                        "ExtraDay": "59",
+                        "ExtraNight": "59",
+                        "VehicleType": [
+                            "5964a78e0ac88f1b96dc1887",
+                            "596470ec094f83096d16e7e6"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Fuel Delivery",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf7567",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "45",
+                        "NightCharge": "46",
+                        "BaseKM": "49",
+                        "ExtraDay": "46",
+                        "ExtraNight": "46",
+                        "VehicleType": []
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Tube",
+                "IsService": true,
+                "IsBackup": false,
+                "_id": "59807665b7e9311982cf7566",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "898",
+                        "NightCharge": "86",
+                        "BaseKM": "89",
+                        "ExtraDay": "59",
+                        "ExtraNight": "59",
+                        "VehicleType": [
+                            "596470ec094f83096d16e7e6"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Tubeless",
+                "IsService": true,
+                "IsBackup": false,
+                "_id": "59807665b7e9311982cf7565",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "49",
+                        "NightCharge": "49",
+                        "BaseKM": "49",
+                        "ExtraDay": "49",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "59647106455fde09895a4aa6",
+                            "5964a72fc07c971b7d65c115"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Flatbed",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf7564",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "79",
+                        "NightCharge": "49",
+                        "BaseKM": "49",
+                        "ExtraDay": "49",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "5964a78e0ac88f1b96dc1887",
+                            "596470ec094f83096d16e7e6"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Lifting",
+                "IsService": true,
+                "IsBackup": false,
+                "_id": "59807665b7e9311982cf7563",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "49",
+                        "NightCharge": "49",
+                        "BaseKM": "49",
+                        "ExtraDay": "49",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "5964a78e0ac88f1b96dc1887"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Mechanical",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf7562",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "59",
+                        "NightCharge": "49",
+                        "BaseKM": "49",
+                        "ExtraDay": "49",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "5964a78e0ac88f1b96dc1887"
+                        ]
+                    }
+                ]
+            },
+            {
+                "ServiceName": "Computrized",
+                "IsService": true,
+                "IsBackup": true,
+                "_id": "59807665b7e9311982cf7561",
+                "Charges": [
+                    {
+                        "FuelType": "Patrol",
+                        "DayCharge": "89",
+                        "NightCharge": "49",
+                        "BaseKM": "49",
+                        "ExtraDay": "49",
+                        "ExtraNight": "49",
+                        "VehicleType": [
+                            "5964a72fc07c971b7d65c115",
+                            "59647106455fde09895a4aa6"
+                        ]
+                    }
+                ]
+            }
+        ],
+        "IDo": true
+    }
+}

@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
+
+mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://vikram:vikram@ds131492.mlab.com:31492/readyapi', {
     useMongoClient: true
 });
@@ -160,22 +162,29 @@ app.post('/vendor_info', (req, res) => {
             VehicleInfo.find().then((vehicle) => {
 
                 for (var i = 0; i < vendorInfo.Bike.Services.length; i++) {
+                     console.log(vendorInfo.Bike.Services[i].ServiceName);
 
                     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
 
                         for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
+
 
                             var vehicleName;
                             var id = vendorInfo.Bike.Services[i].Charges[j].VehicleType[k];
                             var arrFound = vehicle.filter(function (item) {
                                 return item._id == `${id}`;
                             });
+                          
 
                             if (arrFound.length > 0) {
                                 var vhcl = arrFound[0];
                                 vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
                                 vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = vehicleName;
 
+                            }
+
+                            else{
+                            vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = "Default make model";
                             }
                         }
                     }
@@ -187,6 +196,7 @@ app.post('/vendor_info', (req, res) => {
 
                 //car
                 for (var i = 0; i < vendorInfo.Car.Services.length; i++) {
+                    
 
                     for (var j = 0; j < vendorInfo.Car.Services[i].Charges.length; j++) {
 

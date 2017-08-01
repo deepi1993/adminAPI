@@ -1,172 +1,75 @@
-// // var express = require('express');
-// // var bodyParser = require('body-parser');
+var express = require('express');
+var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://vikram:vikram@ds131492.mlab.com:31492/readyapi', {
+    useMongoClient: true
+});
 
-// // var { mongoose } = require('./db/mongoose');
-// // var { Vendor } = require('./models/vendorInfo');
-
-
-
-// // var app = express();
-
-
-// // app.use(bodyParser.json());
-
-
-// // // Vendor.find( {}, function(err, vendorInfo) {
-// // //     if(err)
-// // //     {
-// // //         console.log(err);
-// // //     }
-// // //     if(vendorInfo === null)
-// // //     {
-// // //         console.log(invalid);
-// // //     }
-// // //     else 
-// // //     {
-// // //         console.log(vendorInfo);
-// // //     }
-// // // } )
+var VehicleInfo = require('./models/vehicleInfo');
+var VendorInfo = require('./models/vendorInfo');
 
 
 
+var getVehicleInfo = function(id) {
+    var info = VehicleInfo.findOne({_id:id});
+    return info;
+}
+var id = 
+var query = getVehicleInfo(id);
+console.log(query);
+
+query.exec(function(err,result){
+   if(err)
+      return console.log(err);
+  console.log(result);
+});
 
 
-// // // app.post('/vendorinfo', (req, res) => {
-// // //     Vendor.find( {}, function(err, vendorInfo) {
-// // //     if(err)
-// // //     {
-// // //         console.log(err);
-// // //     }
-// // //     if(vendorInfo === null)
-// // //     {
-// // //         console.log(invalid);
-// // //     }
-// // //     else 
-// // //     {
-// // //         console.log(vendorInfo);
-// // //         res.send(vendorInfo);
-// // //     }
-// // // } )
+// var Helper = require('./helper');
+var app = express();
+const port = process.env.PORT || 3000;
 
-// // // })
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
-
-
-// // //  Vendor.findOne(({dbId:"id"}) , function(err , vendorInfo) {
-// // //     if(err)
-// // //     {
-// // //         console.log("unable to find");
-// // //     }
-// // //     if(vehicle === null)
-// // //     {
-// // //         console.log("invalid id");
-// // //     }
-// // //     else
-// // //     {
-// // //     console.log(vendorInfo);
-
-// // //     }
-// // // })
-
-
-
-
-
-// // app.post('/vendorinfo', (req, res) => {
-// //     var id = (req.body.garage_id);
-// //     var database;
-// //     var dbId = database.onboarding_info.garage_id;
-
-// //     Vendor.findOne({ "onboarding_info.garageID": (id).toString() }, function (err, vendorInfo) {
-// //         if (err) {
-// //             return res.status(500).json({
-// //                 isSuccess: false,
-// //                 message: 'An error occured',
-// //                 error: err
-// //             })
-// //             }
-// //     if(vehicle === null) {
-// //                 console.log("invalid id");
-// //             }
-// //             else {
-// //                 console.log(vendor);
-// //                 res.send(vendorInfo);
-// //             }
-// //         })
-
-
-   
-// // });    
-
-
-
-
-// var a ="";
-// var c = "deep";
-
-// var funct = (a,b) => {
-//     if(b.length !== 0)
-//     {
-//         a = b;
-//     }
-//     return a;
-// }
-
-
-
-
-
-
-
-// // var first = {
-// //     one: "one",
-// //     two: ""
-// // };
-
-
-// // // var second =  {
-// // };
-
-
-// // funct(second.one , first.one);
-// // console.log(second);
-// // funct(second.two , first.two);
-// console.log(funct(a,c));
-
-// // console.log(a);
-// // console.log(a);
-
-
-// // console.log(second);  
-
-
-
-
+//HELPER FUNCTION FOR VALIDATION RETURNS AN ARRAY OF NON Null STRING KEYS
 var validation = (obj) => {
     var d = Object.keys(obj);
     var i = 0;
-    while(i < d.length) 
-    {
-        if(obj[d[i]].length == 0)
-        {
-            console.log(obj[d[i]]);
-            d.splice(i,1);
+    while (i < d.length) {
+        if (obj[d[i]].length == 0) {
+
+            delete obj[d[i]];
+
         }
         i++;
     }
-    return d;
-};
-
-
-var funobj = {
-    name:"deep",
-    city:"jaipur",
-    lname:"goyal",
-    empty:""
+    return obj;
 };
 
 
 
-console.log(fun(funobj));
+
+
+// VehicleInfo.findOne({_id:id} , function(err,vehicleInfo)
+// {
+//     if(vehicleInfo===null)
+//     {
+//         console.log("ID doesnt exists");
+//     }
+//     else{
+//         console.log(vehicleInfo);       
+//     var vehicleName = `${vehicleInfo.vehicle.make}_${vehicleInfo.vehicle.model}`;
+//     console.log(vehicleName);
+//     }
+// });
+
+
+app.listen(port, () => {
+    console.log(`started on port ${port}`);
+});
+
+
+module.exports = { app };  
