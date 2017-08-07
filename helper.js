@@ -1,48 +1,33 @@
-var Shift = (wStart, wEnd) =>
-{
-    // console.log("shift function acceseed");
-    // var start = Date.parse(wStart);
-    // var end = Date.parse(wEnd);
-    // var time = end-start;
-    // var hrs = time/3600000;
-    // console.log(hrs);
-    // var shift;
-    // if(hrs === 24)
-    // {
-    //     shift = "24_hours";
-    // }
-    // else{
-        var start = new Date(wStart);
-        var s= start.getUTCHours();
-        console.log(s);
-        var end = new Date(wEnd);
-        var e = end.getUTCHours();
-        console.log(e);
-        if((8<=s) && (e < 21))
-        {
-            shift = "Day";
-        }
-        else if(s >= 21) 
-        {
-            shift = "Day"
-        }
-        else 
-        {
-            shift = "Night";
-        }
-    
+var Shift = (wStart, wEnd) => {
+    console.log("helper acceseed");
 
+    var hrs = (Date.parse(wEnd) - Date.parse(wStart)) / 3600000;
+    var s = new Date(wStart).getUTCHours();
+    var e = new Date(wEnd).getUTCHours();
+    if (hrs < 0) {
+        var statement = "wrong time durations entered"
+        return statement;
+    }
+    if ((s >= 8) && (e <= 21) && (hrs <= 12) && (e !== 0)) {
+        shift = "Day";
+    }
+    else if ((s >= 21) && (e <= 8) && (hrs <= 12)) {
+        shift = "Night";
+    }
+    else {
+        shift = "24_hrs";
+    }
     return shift;
 
 }
 
+//test
 
+// var work_Start = "2017-07-22T12:00:21.000Z";
+// var work_End = "2017-07-22T01:00:21.000Z";
 
-var work_Start = "2017-07-22T12:00:21.000Z";
-var work_End = "2017-07-23T00:00:21.000Z";
-
-var d = Shift(work_Start , work_End);
-console.log(d);
+// var d = Shift(work_Start, work_End);
+// console.log(d);
 
 module.exports = {
     Shift

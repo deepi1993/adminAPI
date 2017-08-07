@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 
+const _ = require('lodash');
+
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://vikram:vikram@ds131492.mlab.com:31492/readyapi', {
     useMongoClient: true
@@ -10,14 +12,22 @@ mongoose.connect('mongodb://vikram:vikram@ds131492.mlab.com:31492/readyapi', {
 
 var VehicleInfo = require('./models/vehicleInfo');
 var VendorInfo = require('./models/vendorInfo');
+var User = require('./models/user');
 
-// var Helper = require('./helper');
+var Helper = require('./helper');
 var app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+//Testing the shift function
+// var work_Start = "2017-07-22T12:00:21.000Z";
+// var work_End = "2017-07-22T13:00:21.000Z";
+
+// var d = Helper.Shift(work_Start, work_End);
+// console.log(d);
 
 //HELPER FUNCTION FOR VALIDATION RETURNS AN ARRAY OF NON Null STRING KEYS
 var validation = (obj) => {
@@ -96,6 +106,7 @@ app.post('/vendor_info', (req, res) => {
 
 
 
+
             //OPERATION TIMINGS
             data.operation_timings = [];
             var i = 0;
@@ -113,7 +124,7 @@ app.post('/vendor_info', (req, res) => {
                     
                     data.operation_timings[i].work_Start = vendorInfo.Timings[day].wStart.toString().slice(16,24);
                     data.operation_timings[i].work_End = vendorInfo.Timings[day].wEnd.toString().slice(16,24);
-                    data.operation_timings[i].shift = "24_hours";
+                    data.operation_timings[i].shift = Helper.Shift(data.operation_timings[i].work_Start ,data.operation_timings[i].work_End);
                     if (vendorInfo.Timings[day].isRest = true) {
                         data.operation_timings[i].rest_Start = vendorInfo.Timings[day].rStart.toString().slice(16,24);
                         data.operation_timings[i].rest_End = vendorInfo.Timings[day].rEnd.toString().slice(16,24);
@@ -162,7 +173,7 @@ app.post('/vendor_info', (req, res) => {
             VehicleInfo.find().then((vehicle) => {
 
                 for (var i = 0; i < vendorInfo.Bike.Services.length; i++) {
-                     console.log(vendorInfo.Bike.Services[i].ServiceName);
+                     delete vendorInfo.Bike.Services[i]._id;
 
                     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
 
@@ -184,7 +195,7 @@ app.post('/vendor_info', (req, res) => {
                             }
 
                             else{
-                            vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = "Default make model";
+                            vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = "make model not found";
                             }
                         }
                     }
@@ -195,6 +206,8 @@ app.post('/vendor_info', (req, res) => {
                 data.bike = vendorInfo.Bike;
 
                 //car
+                if(vendorInfo.Car.Services.length != 0)
+                {
                 for (var i = 0; i < vendorInfo.Car.Services.length; i++) {
                     
 
@@ -219,6 +232,7 @@ app.post('/vendor_info', (req, res) => {
                 }
 
                 data.car = vendorInfo.Car;
+                }
 
                 res.send(data);
 
@@ -235,7 +249,7 @@ app.post('/vendor_info', (req, res) => {
 })
 
 
-
+// Route to change the Staus and Comment
 app.post('/vendor_status' , (req,res) => {
     var id = req.body.garage_id.toString();
     console.log(id);
@@ -249,6 +263,31 @@ app.post('/vendor_status' , (req,res) => {
     }
     res.send("Sucessfuly Updated Data");
 });
+
+})
+
+
+
+// Route to register new user.
+
+app.post('/new_user' , (req,res) => {
+  var body = _.pick(req.body, ['email', 'password']);
+  var user = new User(body);
+
+  user.save().then((user) => {
+    res.send(user);
+  }).catch((e) => {
+    res.status(200).send(e);
+  })
+})
+
+
+
+
+//Route to login
+
+
+app.post('/login' , (req,res) => {
 
 })
 
