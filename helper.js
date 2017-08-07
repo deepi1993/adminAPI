@@ -1,5 +1,5 @@
 var Shift = (wStart, wEnd) => {
-    console.log("helper acceseed");
+    
 
     var hrs = (Date.parse(wEnd) - Date.parse(wStart)) / 3600000;
     var s = new Date(wStart).getUTCHours();
