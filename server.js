@@ -44,16 +44,11 @@ var validation = (obj) => {
     return obj;
 };
 
-
-
-
 //POST ROUTE FOR VENDOR INFO
 app.post('/vendor_info', (req, res) => {
 
     var d = req.body.garage_id;
     console.log(d);
-
-    
     //vendorInfo stores all the info of the garage with particular garage id.
     VendorInfo.findOne({ "onboarding_info.garageID": d.toString() }, function (err, vendorInfo) {
         if (err) {
@@ -69,12 +64,9 @@ app.post('/vendor_info', (req, res) => {
         else {
 
             //   array to be sent in the response
-
             var data = {};
 
-
             //BASIC INFORMATION
-
             data.basic_info = {};
             data.basic_info.garage_id = vendorInfo.onboarding_info.garageID;
             data.basic_info.garage_name = vendorInfo.BasicInfo.garagename;
@@ -89,8 +81,6 @@ app.post('/vendor_info', (req, res) => {
                 data.basic_info.gallery[i] = vendorInfo.BasicInfo.gallery[i];
             }
 
-
-
             //BANK INFORMATION
             data.bank_info = {};
             data.bank_info.bank_name = vendorInfo.Bank.bankName;
@@ -103,9 +93,6 @@ app.post('/vendor_info', (req, res) => {
             data.bank_info.paytm_number = vendorInfo.Bank.paytm;
             //validation after feeding the information so even if info comes we dont have to change the code
             data.bank_info = validation(data.bank_info);
-
-
-
 
             //OPERATION TIMINGS
             data.operation_timings = [];
@@ -121,23 +108,20 @@ app.post('/vendor_info', (req, res) => {
                     i++;
                 }
                 else {
-                    
-                    data.operation_timings[i].work_Start = vendorInfo.Timings[day].wStart.toString().slice(16,24);
-                    data.operation_timings[i].work_End = vendorInfo.Timings[day].wEnd.toString().slice(16,24);
-                    data.operation_timings[i].shift = Helper.Shift(data.operation_timings[i].work_Start ,data.operation_timings[i].work_End);
+
+                    data.operation_timings[i].work_Start = vendorInfo.Timings[day].wStart.toString().slice(16, 24);
+                    data.operation_timings[i].work_End = vendorInfo.Timings[day].wEnd.toString().slice(16, 24);
+                    data.operation_timings[i].shift = Helper.Shift(data.operation_timings[i].work_Start, data.operation_timings[i].work_End);
                     if (vendorInfo.Timings[day].isRest = true) {
-                        data.operation_timings[i].rest_Start = vendorInfo.Timings[day].rStart.toString().slice(16,24);
-                        data.operation_timings[i].rest_End = vendorInfo.Timings[day].rEnd.toString().slice(16,24);
+                        data.operation_timings[i].rest_Start = vendorInfo.Timings[day].rStart.toString().slice(16, 24);
+                        data.operation_timings[i].rest_End = vendorInfo.Timings[day].rEnd.toString().slice(16, 24);
                     }
                     else {
                         data.operation_timings[i].rest = true;
                     }
                     i++;
                 }
-
             }
-
-
             // DOCUMENTS
             data.documents = [];
             for (var i = 0; i < vendorInfo.Documents.length; i++) {
@@ -147,8 +131,7 @@ app.post('/vendor_info', (req, res) => {
                 data.documents[i].image = vendorInfo.Documents[i].Img;
                 data.documents[i].Signature = vendorInfo.onboarding_info.Signature;
             }
-            if(data.documents.length === 0)
-            {
+            if (data.documents.length === 0) {
                 delete data.documents;
             }
 
@@ -164,105 +147,79 @@ app.post('/vendor_info', (req, res) => {
                 data.contact_info.languages = [];
                 data.contact_info[i].languages = vendorInfo.Contacts[i].languages;
             }
-            if(data.contact_info.length === 0)
-            {
+            if (data.contact_info.length === 0) {
                 delete data.contact_info;
             }
-
             //SERVICES
+            //bike
             VehicleInfo.find().then((vehicle) => {
-
                 for (var i = 0; i < vendorInfo.Bike.Services.length; i++) {
-                     delete vendorInfo.Bike.Services[i]._id;
-
+                    delete vendorInfo.Bike.Services[i]._id;
                     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
-
                         for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
-
-
                             var vehicleName;
                             var id = vendorInfo.Bike.Services[i].Charges[j].VehicleType[k];
                             var arrFound = vehicle.filter(function (item) {
                                 return item._id == `${id}`;
                             });
-                          
-
                             if (arrFound.length > 0) {
                                 var vhcl = arrFound[0];
                                 vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
                                 vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = vehicleName;
-
                             }
-
-                            else{
-                            vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = "make model not found";
+                            else {
+                                vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = "make model not found";
                             }
                         }
                     }
                 }
-
-
-
                 data.bike = vendorInfo.Bike;
-
                 //car
-                if(vendorInfo.Car.Services.length != 0)
-                {
-                for (var i = 0; i < vendorInfo.Car.Services.length; i++) {
-                    
+                if (vendorInfo.Car.Services.length != 0) {
+                    for (var i = 0; i < vendorInfo.Car.Services.length; i++) {
+                        for (var j = 0; j < vendorInfo.Car.Services[i].Charges.length; j++) {
 
-                    for (var j = 0; j < vendorInfo.Car.Services[i].Charges.length; j++) {
+                            for (var k = 0; k < vendorInfo.Car.Services[i].Charges[j].VehicleType.length; k++) {
 
-                        for (var k = 0; k < vendorInfo.Car.Services[i].Charges[j].VehicleType.length; k++) {
-
-                            var vehicleName;
-                            var id = vendorInfo.Car.Services[i].Charges[j].VehicleType[k];
-                            var arrFound = vehicle.filter(function (item) {
-                                return item._id == `${id}`;
-                            });
-
-                            if (arrFound.length > 0) {
-                                var vhcl = arrFound[0];
-                                vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
-                                vendorInfo.Car.Services[i].Charges[j].VehicleType[k] = vehicleName;
-
+                                var vehicleName;
+                                var id = vendorInfo.Car.Services[i].Charges[j].VehicleType[k];
+                                var arrFound = vehicle.filter(function (item) {
+                                    return item._id == `${id}`;
+                                });
+                                if (arrFound.length > 0) {
+                                    var vhcl = arrFound[0];
+                                    vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
+                                    vendorInfo.Car.Services[i].Charges[j].VehicleType[k] = vehicleName;
+                                }
                             }
                         }
                     }
+                    data.car = vendorInfo.Car;
                 }
-
-                data.car = vendorInfo.Car;
-                }
-
                 res.send(data);
-
             }, (e) => {
                 console.log(e);
-                res.send(data);
+                res.status(200).send(e);
             });
-
-
-            
-
         }
     })
 })
 
 
 // Route to change the Staus and Comment
-app.post('/vendor_status' , (req,res) => {
+app.post('/vendor_status', (req, res) => {
     var id = req.body.garage_id.toString();
-    console.log(id);
-    var status= req.body.status.toString();
-    console.log(status);
+
+    var status = req.body.status.toString();
+
     var Comments = req.body.comment.toString();
-    console.log(Comments);
-    VendorInfo.findOneAndUpdate({ "onboarding_info.garageID": id }, {$push: {"onboarding_info.Comments":Comments}, $set:{"onboarding_info.onBoardingStatus":status}} ,{ new: true }, function (err, vendor) {
-    if (err) {
-        console.log("Something went wrong in updating the data");
-    }
-    res.send("Sucessfuly Updated Data");
-});
+    if (status === "")
+        VendorInfo.findOneAndUpdate({ "onboarding_info.garageID": id }, { $push: { "onboarding_info.Comments": Comments }, $set: { "onboarding_info.onBoardingStatus": status } }, { new: true }, function (err, vendor) {
+            if (err) {
+                return res.status(200).send(err);
+            }
+            res.send("Sucessfuly Updated Data");
+        });
 
 })
 
@@ -283,13 +240,29 @@ app.post('/new_user' , (req,res) => {
 
 
 
-
 //Route to login
 
 
-app.post('/login' , (req,res) => {
+app.post('/login', (req, res) => {
+    var email = req.body.email;
+    var password = req.body.password.toString();
+    console.log(password);
+    User.find({"email": email.toString()} , function(err, user) {
+        console.log(user);
+        if(err)
+        {
+            return res.status(200).send(err);
+        }
+        if(user[0].password === password)
+        {
+            res.status(200).send("Granted Access");
+        }
+        else{
+            res.status(200).send("Password dont match");
+        }
+    });
+});
 
-})
 
 app.listen(port, () => {
     console.log(`started on port ${port}`);

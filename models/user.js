@@ -6,7 +6,7 @@ const validator = require('validator');
 const jwt = require('jsonwebtoken');
 
 var UserList = new mongoose.Schema({
-    email: {
+  email: {
     type: String,
     required: true,
     trim: true,
@@ -22,46 +22,56 @@ var UserList = new mongoose.Schema({
     require: true,
     minlength: 6
   },
-  tokens: [{
-    access: {
-      type: String,
-      required: true
-    },
-    token: {
-      type: String,
-      required: true
-    },
-  }],
-
-  empId:{
-
-  },
+  // tokens: [{
+  //   access: {
+  //     type: String,
+  //     required: true
+  //   },
+  //   token: {
+  //     type: String,
+  //     required: true
+  //   },
+  // }],
 
   Department:
   {
-    type:String,
-    enum:['operations', 'quality']
+    type: String,
+    enum: ['operations', 'quality']
+    
   },
 
   position: {
-            type: String,
-            enum: ['Ops-lead', 'Ops' ,'QC-lead','qc']
-        },
+    type: String,
+    enum: ['Ops-lead', 'Ops', 'QC-lead', 'qc']
+   
+  },
 
-  level:{
+  level: {
+    type: String,
+    enum: ['level1', 'level2']
+    
+  },
+
+  empId: {
     type:String,
-    enum:['level1','level2']
-  }      
+   
+  }
 
 
 });
 
+//instance methods. Have access to every single doccument.
+// UserList.methods.generateAuthTokens = function () {
+//   var user = this;
+//   var access = 'auth';
+//   var token = jwt.sign({ _id: user._id.toHexString(), access }, abc123).toString();
+//   user.tokens.push({access,token});
 
-UserList.methods.generateAuthTokens = function(){
-  var user = this;
-  var access= 'auth';
-  var token = jwt.sign({_id:user._id.toHexString(),access}, abc123)
-};
+//  return user.save().then(() => {
+//    return token;
+//  });
+
+// };
 
 
-  module.exports = mongoose.model('Employee_DB', UserList);
+module.exports = mongoose.model('Employee_DB', UserList);
