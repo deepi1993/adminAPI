@@ -253,6 +253,8 @@ app.post('/login', (req, res) => {
         {
             return res.status(200).send(err);
         }
+        // console.log(typeof(user[0].password));
+        // console.log(typeof(password));
         if(user[0].password === password)
         {
             res.status(200).send("Granted Access");
