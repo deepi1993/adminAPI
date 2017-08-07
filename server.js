@@ -213,7 +213,7 @@ app.post('/vendor_status', (req, res) => {
     var status = req.body.status.toString();
 
     var Comments = req.body.comment.toString();
-    if (status === "")
+    
         VendorInfo.findOneAndUpdate({ "onboarding_info.garageID": id }, { $push: { "onboarding_info.Comments": Comments }, $set: { "onboarding_info.onBoardingStatus": status } }, { new: true }, function (err, vendor) {
             if (err) {
                 return res.status(200).send(err);
