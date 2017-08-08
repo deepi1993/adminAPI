@@ -243,20 +243,23 @@ app.post('/login', (req, res) => {
     var email = req.body.email;
     var password = req.body.password.toString();
     console.log(password);
-    User.find({"email": email.toString()} , function(err, user) {
-        console.log(user);
+    User.findOne({email: email.toString()} , function(err, user) {
         if(err)
         {
             return res.status(200).send(err);
         }
-        // console.log(typeof(user[0].password));
-        // console.log(typeof(password));
-        if(user[0].password === password)
+        
+        if(user.password === password)
         {
-            res.status(200).send("Granted Access");
+            responseObj.Success = true;
+            responseObj.Message = "Granted Access";
+            responseObj.User_id = user._id;
+            res.status(200).send(responseObj);
         }
         else{
-            res.status(200).send("Password dont match");
+            responseObj.Success = false;
+            responseObj.Message = "Passwords dont match";
+            res.status(200).send(responseObj);
         }
     });
 });
