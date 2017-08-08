@@ -2,13 +2,13 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
-
-const _ = require('lodash');
-
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://vikram:vikram@ds131492.mlab.com:31492/readyapi', {
     useMongoClient: true
 });
+
+
+const _ = require('lodash');
 
 var VehicleInfo = require('./models/vehicleInfo');
 var VendorInfo = require('./models/vendorInfo');
@@ -21,15 +21,10 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var responseObj = {
 
-//Testing the shift function
-// var work_Start = "2017-07-22T12:00:21.000Z";
-// var work_End = "2017-07-22T13:00:21.000Z";
+};
 
-// var d = Helper.Shift(work_Start, work_End);
-// console.log(d);
-
-//HELPER FUNCTION FOR VALIDATION RETURNS AN ARRAY OF NON Null STRING KEYS
 var validation = (obj) => {
     var d = Object.keys(obj);
     var i = 0;
@@ -51,16 +46,13 @@ app.post('/vendor_info', (req, res) => {
     console.log(d);
     //vendorInfo stores all the info of the garage with particular garage id.
     VendorInfo.findOne({ "onboarding_info.garageID": d.toString() }, function (err, vendorInfo) {
-        if (err) {
-            return res.status(500).json({
-                isSuccess: false,
-                message: 'An error occured',
-                error: err
-            })
+        
+        if ( (err) || (vendorInfo === null)){
+            responseObj.Success = false;
+            responseObj.Message = "cant fetch the garage id";
+            return res.status(200).send(JSON.stringify(responseObj));
         }
-        if (vendorInfo === null) {
-            console.log("invalid id");
-        }
+        
         else {
 
             //   array to be sent in the response
@@ -152,6 +144,8 @@ app.post('/vendor_info', (req, res) => {
             }
             //SERVICES
             //bike
+
+            
             VehicleInfo.find().then((vehicle) => {
                 for (var i = 0; i < vendorInfo.Bike.Services.length; i++) {
                     delete vendorInfo.Bike.Services[i]._id;
@@ -198,8 +192,9 @@ app.post('/vendor_info', (req, res) => {
                 }
                 res.send(data);
             }, (e) => {
-                console.log(e);
-                res.status(200).send(e);
+                responseObj.Success = false;
+                responseObj.Message = e;
+                res.status(200).send(responseObj);
             });
         }
     })
@@ -214,11 +209,12 @@ app.post('/vendor_status', (req, res) => {
 
     var Comments = req.body.comment.toString();
     
+    
         VendorInfo.findOneAndUpdate({ "onboarding_info.garageID": id }, { $push: { "onboarding_info.Comments": Comments }, $set: { "onboarding_info.onBoardingStatus": status } }, { new: true }, function (err, vendor) {
             if (err) {
                 return res.status(200).send(err);
             }
-            res.send("Sucessfuly Updated Data");
+            res.status(200).send();
         });
 
 })
