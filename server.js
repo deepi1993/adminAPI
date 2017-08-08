@@ -203,7 +203,7 @@ app.post('/vendor_info', (req, res) => {
 
 // Route to change the Staus and Comment
 app.post('/vendor_status', (req, res) => {
-    
+
     var id = req.body.garage_id.toString();  
     var status = req.body.status.toString();  
     var empId = req.body.empId.toString();  
@@ -218,6 +218,7 @@ app.post('/vendor_status', (req, res) => {
                 responseObj.Message = err;
                 return res.status(200).send(responseObj);
             }
+            var responseObj = {};
             responseObj.Success = true;
             responseObj.Message = "Status Updated Successfuly";
             res.status(200).send(responseObj);
