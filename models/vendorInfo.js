@@ -415,10 +415,24 @@ var Vendor = new Schema({
         date: {
             type: Date
         },
-        onBoardingStatus: {
-            type: String,
-            enum: ['Saved', 'Visited', 'Submitted' , 'Approve' , 'Reject' , 'Rework' , 'Onhold']
-        },
+        onBoardingStatus: [
+            {
+            status: {
+                type: String,
+                enum: ['Saved', 'Visited', 'Submitted', 'Approve', 'Reject', 'Rework', 'Onhold']
+            },
+            Comments:
+            {
+                type: String,
+                trim: true
+            },
+            empId: {
+                type: String,
+                trim: true
+            }
+
+        }
+        ],
 
         raUser: {
             type: Schema.Types.ObjectId,
@@ -435,11 +449,11 @@ var Vendor = new Schema({
         garageID: {
             type: String,
         },
-        Comments: [
-            {
-           type: String
-                }
-        ]
+        // Comments: [
+        //     {
+        //    type: String
+        //         }
+        // ]
 
     }
 });

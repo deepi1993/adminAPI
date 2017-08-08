@@ -148,7 +148,6 @@ app.post('/vendor_info', (req, res) => {
             
             VehicleInfo.find().then((vehicle) => {
                 for (var i = 0; i < vendorInfo.Bike.Services.length; i++) {
-                    delete vendorInfo.Bike.Services[i]._id;
                     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
                         for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
                             var vehicleName;
@@ -160,6 +159,7 @@ app.post('/vendor_info', (req, res) => {
                                 var vhcl = arrFound[0];
                                 vehicleName = `${vhcl.vehicle.make}_${vhcl.vehicle.model}`;
                                 vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = vehicleName;
+                               
                             }
                             else {
                                 vendorInfo.Bike.Services[i].Charges[j].VehicleType[k] = "make model not found";
@@ -203,18 +203,24 @@ app.post('/vendor_info', (req, res) => {
 
 // Route to change the Staus and Comment
 app.post('/vendor_status', (req, res) => {
-    var id = req.body.garage_id.toString();
+    
+    var id = req.body.garage_id.toString();  
+    var status = req.body.status.toString();  
+    var empId = req.body.empId.toString();  
+    var Comments = req.body.comments.toString();
 
-    var status = req.body.status.toString();
 
-    var Comments = req.body.comment.toString();
     
     
-        VendorInfo.findOneAndUpdate({ "onboarding_info.garageID": id }, { $push: { "onboarding_info.Comments": Comments }, $set: { "onboarding_info.onBoardingStatus": status } }, { new: true }, function (err, vendor) {
+        VendorInfo.findOneAndUpdate({ "onboarding_info.garageID": id }, { $push: { "onboarding_info.onBoardingStatus": {"status":status,"Comments":Comments,"empId":empId} }}, { new: true }, function (err, vendor) {
             if (err) {
-                return res.status(200).send(err);
+                responseObj.Success = false;
+                responseObj.Message = err;
+                return res.status(200).send(responseObj);
             }
-            res.status(200).send();
+            responseObj.Success = true;
+            responseObj.Message = "Status Updated Successfuly";
+            res.status(200).send(responseObj);
         });
 
 })
@@ -237,19 +243,19 @@ app.post('/new_user' , (req,res) => {
 
 
 //Route to login
-
-
 app.post('/login', (req, res) => {
     var email = req.body.email;
     var password = req.body.password.toString();
     console.log(password);
     User.findOne({email: email.toString()} , function(err, user) {
-        if(err)
+        if((err) || (user === null))
         {
-            return res.status(200).send(err);
+            responseObj.Success = false;
+            responseObj.Message = "cant find user";
+            return res.status(200).send(responseObj);
         }
         
-        if(user.password === password)
+       else if(user.password === password)
         {
             responseObj.Success = true;
             responseObj.Message = "Granted Access";
@@ -259,6 +265,7 @@ app.post('/login', (req, res) => {
         else{
             responseObj.Success = false;
             responseObj.Message = "Passwords dont match";
+           delete responseObj.User_id;
             res.status(200).send(responseObj);
         }
     });
