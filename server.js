@@ -18,8 +18,19 @@ var Helper = require('./helper');
 var app = express();
 const port = process.env.PORT || 3000;
 
+
+app.use(bodyParser.text());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
+    next();
+});
 
 var responseObj = {
 
@@ -147,8 +158,14 @@ app.post('/vendor_info', (req, res) => {
 
             
             VehicleInfo.find().then((vehicle) => {
+                if (vendorInfo.Bike.Services.length != 0){
                 for (var i = 0; i < vendorInfo.Bike.Services.length; i++) {
                     for (var j = 0; j < vendorInfo.Bike.Services[i].Charges.length; j++) {
+                        console.log(vendorInfo.Bike.Services[i].Charges[j].VehicleType.length === 0);
+                        if(vendorInfo.Bike.Services[i].Charges[j].VehicleType.length === 0)
+                        {
+                        vendorInfo.Bike.Services[i].Charges[j].VehicleType = "All vehicles";
+                        }
                         for (var k = 0; k < vendorInfo.Bike.Services[i].Charges[j].VehicleType.length; k++) {
                             var vehicleName;
                             var id = vendorInfo.Bike.Services[i].Charges[j].VehicleType[k];
@@ -167,12 +184,13 @@ app.post('/vendor_info', (req, res) => {
                         }
                     }
                 }
+                
                 data.bike = vendorInfo.Bike;
+                }
                 //car
                 if (vendorInfo.Car.Services.length != 0) {
                     for (var i = 0; i < vendorInfo.Car.Services.length; i++) {
                         for (var j = 0; j < vendorInfo.Car.Services[i].Charges.length; j++) {
-
                             for (var k = 0; k < vendorInfo.Car.Services[i].Charges[j].VehicleType.length; k++) {
 
                                 var vehicleName;
@@ -247,6 +265,7 @@ app.post('/new_user' , (req,res) => {
 app.post('/login', (req, res) => {
     var email = req.body.email;
     var password = req.body.password.toString();
+    console.log(email);
     console.log(password);
     User.findOne({email: email.toString()} , function(err, user) {
         if((err) || (user === null))
