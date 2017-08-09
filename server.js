@@ -270,6 +270,7 @@ app.post('/login', (req, res) => {
     User.findOne({email: email.toString()} , function(err, user) {
         if((err) || (user === null))
         {
+            var responseObj ={};
             responseObj.Success = false;
             responseObj.Message = "cant find user";
             return res.status(200).send(responseObj);
@@ -283,9 +284,10 @@ app.post('/login', (req, res) => {
             res.status(200).send(responseObj);
         }
         else{
+            var responseObj = {};
             responseObj.Success = false;
             responseObj.Message = "Passwords dont match";
-           delete responseObj.User_id;
+           
             res.status(200).send(responseObj);
         }
     });
