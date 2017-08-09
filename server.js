@@ -278,6 +278,7 @@ app.post('/login', (req, res) => {
         
        else if(user.password === password)
         {
+            var responseObj = {};
             responseObj.Success = true;
             responseObj.Message = "Granted Access";
             responseObj.User_id = user._id;
